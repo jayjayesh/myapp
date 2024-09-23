@@ -95,6 +95,10 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
+  // TODO: Auto add node index like (for node_key purpose)
+  // * child to child.1.2
+  // * subchild to subchild.1.2.1
+
   List<Node> _convertJsonToNodes(List<dynamic> list) {
     return list.map((item) {
       List<Node> children = [];
