@@ -19,35 +19,35 @@ class _HomePageState extends State<HomePage> {
   {
     "comment_nodes": [
       {
-        "name": "root.1",
+        "name": "root",
         "child": [
           {
-            "name": "child.1.1"
+            "name": "child"
           },
           {
-            "name": "child.1.2"
+            "name": "child"
           }
         ]
       },
       {
-        "name": "root.2",
+        "name": "root",
         "child": [
           {
-            "name": "child.2.1",
+            "name": "child",
             "child": [
               {
-                "name": "subchild.2.1.1"
+                "name": "subchild"
               }
             ]
           },
           {
-            "name": "child.2.2",
+            "name": "child",
             "child": [
               {
-                "name": "subchild.2.2.1"
+                "name": "subchild"
               },
               {
-                "name": "subchild.2.2.2"
+                "name": "subchild"
               }
             ]
           }
@@ -95,20 +95,23 @@ class _HomePageState extends State<HomePage> {
         ));
   }
 
-  // TODO: Auto add node index like (for node_key purpose)
+  // * Auto add node index (for node_key purpose)
   // * child to child.1.2
   // * subchild to subchild.1.2.1
 
-  List<Node> _convertJsonToNodes(List<dynamic> list) {
+  List<Node> _convertJsonToNodes(List<dynamic> list, [String parentKey = '']) {
+    int index = 1;
     return list.map((item) {
+      String nodeKey = parentKey.isNotEmpty ? '$parentKey.$index' : '.$index';
+      index++;
       List<Node> children = [];
       if (item['child'] != null && item['child'].isNotEmpty) {
         // If there are child nodes, recursively convert them
-        children = _convertJsonToNodes(item['child']);
+        children = _convertJsonToNodes(item['child'], nodeKey);
       }
       return Node(
-        label: item['name'],
-        key: item['name'], // You can assign a unique key
+        label: item['name'] + nodeKey,
+        key: item['name'] + nodeKey, // You can assign a unique key
         children: children,
       );
     }).toList();
