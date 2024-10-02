@@ -36,6 +36,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   flutter_treeview: ^1.0.7+1
+  flutter_project_base:
+    git: 
+      url: https://github.com/jayjayesh/flutter_project_base_pkg.git
+      ref: main # branch name
 
 dev_dependencies:
   flutter_test:

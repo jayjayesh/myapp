@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_project_base/flutter_project_base.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var isLoading = false;
   late TreeViewController _treeViewController;
 
   // Sample JSON structure
@@ -79,6 +81,27 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Home Page'),
+          actions: [
+            SizedBox(
+              height: 50,
+              width: 150,
+              child: ElevatedButton(
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  await Future.delayed(const Duration(seconds: 2));
+                  // expand all node
+                  setState(() {
+                    isLoading = false;
+                    _treeViewController =
+                        _treeViewController.copyWith(selectedKey: 'non');
+                  });
+                },
+                child: const Text('Clear Selection'),
+              ).withLoading(isLoading),
+            ),
+          ],
         ),
         body: TreeView(
           controller: _treeViewController,
